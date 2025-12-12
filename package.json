@@ -1,0 +1,27 @@
+{
+  "name": "faceit-analyzer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --watch src --exec node src/telegram/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/letkh/faceit-analyzer.git"
+  },
+  "author": "letkh",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/letkh/faceit-analyzer/issues"
+  },
+  "homepage": "https://github.com/letkh/faceit-analyzer#readme",
+  "dependencies": {
+    "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "dotenv": "^17.2.3",
+    "nodemon": "^3.1.11"
+  }
+}
