@@ -85,7 +85,7 @@ module.exports = {
     }
 
     try {
-      await ctx.sendChatAction('typing')
+      // await ctx.sendChatAction('typing')
 
       let faceitPlayer = null
       let steamId = null
@@ -107,7 +107,6 @@ module.exports = {
         const formattedStats = await getFormattedPlayerStats(faceitPlayer, faceitPlayerStats)
 
         const message = formatPlayerInfo(faceitPlayer, steamProfile, cs2Playtime, formattedStats)
-        
         if (steamProfile?.avatarfull) {
           ctx.replyWithPhoto(steamProfile.avatarfull, {
             caption: message,

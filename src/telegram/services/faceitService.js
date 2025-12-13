@@ -1,5 +1,10 @@
 const axios = require('axios')
-const logger = require('../../utils/logger')
+// const logger = require('../../utils/logger')
+const logger = {
+    info: (...args) => console.log('[INFO]', ...args),
+    warn: (...args) => console.warn('[WARN]', ...args),
+    error: (...args) => console.error('[ERROR]', ...args)
+};
 
 async function getSteamId(nickname) {
     try {
