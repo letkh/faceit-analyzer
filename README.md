@@ -21,9 +21,6 @@ The bot provides complete player information based on Steam profile:
 - 🌍 Country
 - 📅 Faceit registration date
 
-### Avatar Display
-The bot automatically sends the player's Steam avatar along with the information.
-
 ## How to Use
 
 1. **By Steam ID from profile:**
