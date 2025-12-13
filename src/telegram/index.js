@@ -31,5 +31,5 @@ handlerFiles.forEach(file => {
     }
 })
 
-bot.launch()
+// bot.launch() // NOTE: vercel doesnt support this
 
