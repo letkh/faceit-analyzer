@@ -1,5 +1,5 @@
 module.exports = {
     command: 'help',
-    description: 'Помощь',
-    handler: (ctx) => ctx.reply('Для поиска игрока, пришли мне его steam id (например, steamcommunity.com/id/letkh-)'),
+    description: 'usage instructions',
+    handler: (ctx) => ctx.reply('To search for a player, send me their Steam ID (for example, steamcommunity.com/id/letkh-)'),
 }

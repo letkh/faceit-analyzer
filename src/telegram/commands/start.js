@@ -1,5 +1,5 @@
 module.exports = {
     command: 'start',
-    description: 'Начать работу',
+    description: 'start the bot',
     handler: (ctx) => ctx.reply('Welcome'),
 }

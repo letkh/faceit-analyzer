@@ -6,7 +6,6 @@ require('dotenv').config()
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN)
 
-// Загрузка команд
 const commandsPath = path.join(__dirname, 'commands')
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'))
 
@@ -19,7 +18,6 @@ commandFiles.forEach(file => {
 
 bot.telegram.setMyCommands(commands)
 
-// Загрузка обработчиков сообщений
 const handlersPath = path.join(__dirname, 'handlers')
 const handlerFiles = fs.readdirSync(handlersPath).filter(file => file.endsWith('.js'))
 
