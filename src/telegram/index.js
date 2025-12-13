@@ -6,6 +6,7 @@ require('dotenv').config()
 
 const bot = new Telegraf(process.env.TELEGRAM_TOKEN)
 
+// Загрузка команд
 const commandsPath = path.join(__dirname, 'commands')
 const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'))
 
@@ -18,6 +19,19 @@ commandFiles.forEach(file => {
 
 bot.telegram.setMyCommands(commands)
 
-bot.on(message('sticker'), (ctx) => ctx.reply('👍'))
-bot.hears('hi', (ctx) => ctx.reply('Hey there'))
+// Загрузка обработчиков сообщений
+const handlersPath = path.join(__dirname, 'handlers')
+const handlerFiles = fs.readdirSync(handlersPath).filter(file => file.endsWith('.js'))
+
+handlerFiles.forEach(file => {
+    const handler = require(path.join(handlersPath, file))
+    
+    if (handler.type === 'on') {
+        bot.on(handler.filter, handler.handler)
+    } else {
+        bot.hears(handler.filter, handler.handler)
+    }
+})
+
 bot.launch()
+

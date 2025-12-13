@@ -1,5 +1,5 @@
 module.exports = {
     command: 'help',
-    description: 'Справка',
-    handler: (ctx) => ctx.reply('Send me a sticker'),
+    description: 'Помощь',
+    handler: (ctx) => ctx.reply('Для поиска игрока, пришли мне его steam id (например, steamcommunity.com/id/letkh-)'),
 }
