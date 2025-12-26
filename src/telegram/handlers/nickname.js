@@ -6,6 +6,7 @@ const {
   getFaceitPlayerStats,
   getFormattedPlayerStats
 } = require('../services/faceitService')
+const { getLeetifyProfile } = require('../services/leetifyService')
 const logger = require('../../utils/logger')
 
 function extractNickname(text) {
@@ -22,7 +23,7 @@ function extractNickname(text) {
   return null
 }
 
-function formatPlayerInfo(faceitPlayer, steamProfile, cs2Playtime, faceitPlayerStats) {
+function formatPlayerInfo(faceitPlayer, steamProfile, cs2Playtime, faceitPlayerStats, leetifyProfile) {
   let message = `🎮 **${faceitPlayer.nickname}**\n\n`
 
   if (steamProfile) {
@@ -33,7 +34,7 @@ function formatPlayerInfo(faceitPlayer, steamProfile, cs2Playtime, faceitPlayerS
     const vanity = steamProfile.profileurl?.split('/').filter(x => x)[3] || 'N/A'
     message += `Vanity: \`${vanity}\`\n`
 
-    if (cs2Playtime) {
+    if (cs2Playtime !== null && cs2Playtime !== undefined) {
       message += `CS2 playtime: \`${cs2Playtime}ч\`\n`
     }
     message += `\n`
@@ -63,6 +64,25 @@ function formatPlayerInfo(faceitPlayer, steamProfile, cs2Playtime, faceitPlayerS
     message += `HS: \`${hs}%\`\n`
     message += `K/D: \`${kd}\`\n`
     message += `ADR: \`${adr}\`\n`
+  }
+
+  if (leetifyProfile) {
+    message += `\n**📊 LEETIFY**\n`
+    
+    if (leetifyProfile.ranks?.competitiveRank?.tier) {
+      message += `Rank: \`${leetifyProfile.ranks.competitiveRank.tier}\`\n`
+    }
+    
+    if (leetifyProfile.rating?.current) {
+      message += `Rating: \`${Math.round(leetifyProfile.rating.current)}\`\n`
+    }
+    
+    if (leetifyProfile.stats) {
+      const stats = leetifyProfile.stats
+      if (stats.aim) message += `Aim: \`${Math.round(stats.aim)}\`\n`
+      if (stats.positioning) message += `Positioning: \`${Math.round(stats.positioning)}\`\n`
+      if (stats.utility) message += `Utility: \`${Math.round(stats.utility)}\`\n`
+    }
   }
 
   message += `\n🔗 [Faceit Profile](https://www.faceit.com/players/${faceitPlayer.nickname})`
@@ -103,10 +123,11 @@ module.exports = {
       if (faceitPlayer) {
         const steamProfile = steamId ? await getSteamProfile(steamId) : null
         const cs2Playtime = steamId ? await getCS2Playtime(steamId) : null
+        const leetifyProfile = steamId ? await getLeetifyProfile(steamId) : null
         const faceitPlayerStats = await getFaceitPlayerStats(faceitPlayer.player_id)
         const formattedStats = await getFormattedPlayerStats(faceitPlayer, faceitPlayerStats)
 
-        const message = formatPlayerInfo(faceitPlayer, steamProfile, cs2Playtime, formattedStats)
+        const message = formatPlayerInfo(faceitPlayer, steamProfile, cs2Playtime, formattedStats, leetifyProfile)
         if (steamProfile?.avatarfull) {
           ctx.replyWithPhoto(steamProfile.avatarfull, {
             caption: message,
