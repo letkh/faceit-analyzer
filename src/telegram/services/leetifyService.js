@@ -12,7 +12,7 @@ async function getLeetifyProfile(steamId) {
         const response = await axios.get(
             `${LEETIFY_BASE_URL}/v3/profile`,
             {
-                params: { steamId },
+                params: { steam64_id: steamId },
                 headers: {
                     'Authorization': process.env.LEETIFY_API_KEY || ''
                 }
@@ -30,7 +30,7 @@ async function getLeetifyMatches(steamId, limit = 5) {
         const response = await axios.get(
             `${LEETIFY_BASE_URL}/v3/profile/matches`,
             {
-                params: { steamId, limit },
+                params: { steam64_id: steamId, limit },
                 headers: {
                     'Authorization': process.env.LEETIFY_API_KEY || ''
                 }

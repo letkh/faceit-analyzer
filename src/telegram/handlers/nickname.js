@@ -69,19 +69,19 @@ function formatPlayerInfo(faceitPlayer, steamProfile, cs2Playtime, faceitPlayerS
   if (leetifyProfile) {
     message += `\n**📊 LEETIFY**\n`
     
-    if (leetifyProfile.ranks?.competitiveRank?.tier) {
-      message += `Rank: \`${leetifyProfile.ranks.competitiveRank.tier}\`\n`
+    if (leetifyProfile.ranks) {
+      const ranks = leetifyProfile.ranks
+      if (ranks.leetify) message += `Leetify Rating: \`${ranks.leetify.toFixed(2)}\`\n`
+      if (ranks.premier) message += `Premier: \`${ranks.premier}\`\n`
+      if (ranks.faceit) message += `Faceit Level: \`${ranks.faceit}\`\n`
     }
     
-    if (leetifyProfile.rating?.current) {
-      message += `Rating: \`${Math.round(leetifyProfile.rating.current)}\`\n`
+    if (leetifyProfile.winrate !== undefined) {
+      message += `Win Rate: \`${(leetifyProfile.winrate * 100).toFixed(1)}%\`\n`
     }
     
-    if (leetifyProfile.stats) {
-      const stats = leetifyProfile.stats
-      if (stats.aim) message += `Aim: \`${Math.round(stats.aim)}\`\n`
-      if (stats.positioning) message += `Positioning: \`${Math.round(stats.positioning)}\`\n`
-      if (stats.utility) message += `Utility: \`${Math.round(stats.utility)}\`\n`
+    if (leetifyProfile.total_matches) {
+      message += `Total Matches: \`${leetifyProfile.total_matches}\`\n`
     }
   }
 
