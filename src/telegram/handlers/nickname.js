@@ -69,19 +69,36 @@ function formatPlayerInfo(faceitPlayer, steamProfile, cs2Playtime, faceitPlayerS
   if (leetifyProfile) {
     message += `\n**📊 LEETIFY**\n`
     
-    if (leetifyProfile.ranks) {
-      const ranks = leetifyProfile.ranks
-      if (ranks.leetify) message += `Leetify Rating: \`${ranks.leetify.toFixed(2)}\`\n`
-      if (ranks.premier) message += `Premier: \`${ranks.premier}\`\n`
-      if (ranks.faceit) message += `Faceit Level: \`${ranks.faceit}\`\n`
+    const rating = leetifyProfile.rating
+    const stats = leetifyProfile.stats
+    const ranks = leetifyProfile.ranks
+    
+    if (rating) {
+      if (rating.aim !== undefined) message += `Aim: \`${rating.aim.toFixed(1)}\`\n`
+      if (rating.utility !== undefined) message += `Utility: \`${rating.utility.toFixed(1)}\`\n`
+      if (rating.positioning !== undefined) message += `Position: \`${rating.positioning.toFixed(1)}\`\n`
+      if (rating.clutch !== undefined) message += `Clutch: \`${rating.clutch > 0 ? '+' : ''}${rating.clutch.toFixed(1)}\`\n`
+      if (rating.opening !== undefined) message += `Opening: \`${rating.opening > 0 ? '+' : ''}${rating.opening.toFixed(1)}\`\n`
+    }
+    
+    if (ranks?.leetify !== undefined) {
+      message += `Rating: \`${ranks.leetify > 0 ? '+' : ''}${ranks.leetify.toFixed(1)}\`\n`
+    }
+    
+    if (stats) {
+      if (stats.preaim !== undefined) message += `Preaim: \`${stats.preaim.toFixed(2)}°\`\n`
+      if (stats.reaction_time_ms !== undefined) message += `Time to DMG: \`${Math.round(stats.reaction_time_ms)}ms\`\n`
+      if (stats.he_foes_damage_avg !== undefined && stats.he_friends_damage_avg !== undefined) {
+        message += `AVG HE DMG: \`${stats.he_foes_damage_avg.toFixed(1)} / ${stats.he_friends_damage_avg.toFixed(1)}\`\n`
+      }
     }
     
     if (leetifyProfile.winrate !== undefined) {
-      message += `Win Rate: \`${(leetifyProfile.winrate * 100).toFixed(1)}%\`\n`
+      message += `Winrate: \`${(leetifyProfile.winrate * 100).toFixed(0)}%\`\n`
     }
     
     if (leetifyProfile.total_matches) {
-      message += `Total Matches: \`${leetifyProfile.total_matches}\`\n`
+      message += `Matches: \`${leetifyProfile.total_matches}\`\n`
     }
   }
 
